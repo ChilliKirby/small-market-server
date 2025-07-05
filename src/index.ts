@@ -4,13 +4,7 @@ import authRoutes from './Routes/AuthRoute';
 
 
 const app = express();
-const PORT = 3000;
-
-// app.get('/', (req, res) =>{
-//     res.send('Hello from Express!');
-// });
-
-
+const PORT = 3001;
 
 app.use(express.json());
 
