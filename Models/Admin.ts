@@ -1,7 +1,11 @@
 import mongoose, { mongo } from 'mongoose';
 
 const AdminSchema = new mongoose.Schema({
-    name: {
+    first_name: {
+        type: String,
+        required: true
+    },
+    last_name: {
         type: String,
         required: true
     },
