@@ -11,12 +11,12 @@ router.post('/adminlogin', verifyGoogleToken, async (req, res) =>{
 
     //res.send("req");
     const user = await Admin.findOne({ email: email});
- 
+    console.log("sonic")
     if(!user){
         res.status(404).send("User not found");
     } 
 
-    
+
 });
 
 export default router;
