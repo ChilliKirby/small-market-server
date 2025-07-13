@@ -23,6 +23,7 @@ const verifyGoogleToken = async (req: Request, res: Response, next: NextFunction
         }
         
         (req as any).customData = {
+            name: payload.name,
             email: payload.email,
         };
 

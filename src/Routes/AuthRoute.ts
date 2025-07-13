@@ -8,11 +8,12 @@ const router = express.Router();
 
 router.post('/adminlogin', verifyGoogleToken, async (req, res) => {
 
+    const name = (req as any).customData.name;
     const email = (req as any).customData.email;
 
     //res.send("req");
     const user = await Admin.findOne({ email: email });
-    console.log(user)
+
     if (!user) {
         res.status(404).send("User not found");
     }
@@ -26,8 +27,11 @@ router.post('/adminlogin', verifyGoogleToken, async (req, res) => {
         JWT_SECRET,              // secret (must be a string or buffer)
         { expiresIn: '1d' }      // options (optional)
     );
-
-    res.status(200).json({ token });
+    
+    res.status(200).json({ 
+        name: name,
+        token: token 
+    });
 });
 
 export default router;
