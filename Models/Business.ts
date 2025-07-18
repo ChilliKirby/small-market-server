@@ -31,6 +31,35 @@ const BusinessSchema = new mongoose.Schema(
         min: 0,
         max: 5,
       },
+      imageMain: {
+        type: String,
+      },
+      imageMisc: {
+        type: [String],
+      },
+      subscriptionPlan: {
+        type: String,
+        enum: ['free', 'pro'],
+        default: 'free'
+      },
+      paymentDate: {
+        type: Date,
+      },
+      subscriptionEndDate: {
+        type: Date
+      },
+      autoRenew: {
+        type: Boolean,
+        default: false
+      },
+      paymentProvider: {
+        type: String, 
+        enum: ['stripe', 'paypal', 'none'],
+        default: 'none'
+      },
+      paymentId: {
+        type: String, //External ID from Stripe/Paypal/etc
+      }
     },
   },
   { timestamps: true }
