@@ -20,11 +20,14 @@ const BusinessSchema = new mongoose.Schema(
         message: "Each phone number must be a valid format.",
       },
       address: {
-        street: { type: String, default: "" },
-        city: { type: String, default: "" },
-        state: { type: String, default: "" },
-        zip: { type: String, default: "" },
-        country: { type: String, default: "" },
+        required: true,
+        type: {
+          street: { type: String, default: "" },
+          city: { type: String, default: "" },
+          state: { type: String, default: "" },
+          zip: { type: String, default: "" },
+          country: { type: String, default: "" },
+        }
       },
       rating: {
         type: Number,
@@ -53,7 +56,7 @@ const BusinessSchema = new mongoose.Schema(
         default: false
       },
       paymentProvider: {
-        type: String, 
+        type: String,
         enum: ['stripe', 'paypal', 'none'],
         default: 'none'
       },

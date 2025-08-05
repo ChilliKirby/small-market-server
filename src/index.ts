@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import dotenv from 'dotenv';
 
 import authRoutes from './Routes/AuthRoute';
+import businessRoutes from './Routes/BusinessRoute';
 
 
 /*Configurations*/
@@ -13,6 +14,7 @@ app.use(express.json());
 
 /*Routes*/
 app.use('/auth', authRoutes);
+app.use('/business', businessRoutes);
 
 /* Mongoose Setup */
 mongoose.connect(process.env.MONGO_URL!)
