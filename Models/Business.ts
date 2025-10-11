@@ -12,22 +12,43 @@ const BusinessSchema = new mongoose.Schema(
       required: false,
     },
     phone: {
-      type: [String],
-      default: [],
-      validate: {
-        validator: (val: string[]) =>
-          val.every((num) => /^[0-9\-()+\s]+$/.test(num)),
-        message: "Each phone number must be a valid format.",
-      },
-      address: {
+      type: String,
+      default: "000-000-0000",
+      // validate: {
+      //   validator: (val: string[]) =>
+      //     val.every((num) => /^[0-9\-()+\s]+$/.test(num)),
+      //   message: "Each phone number must be a valid format.",
+      // },
+      
+      // address: {
+      //   required: true,
+      //   type: {
+      //     street: { type: String, default: "" },
+      //     city: { type: String, default: "" },
+      //     state: { type: String, default: "" },
+      //     zip: { type: String, default: "" },
+      //     country: { type: String, default: "" },
+      //   }
+      // },
+      street: {
+        type: String,
+        default: '',
         required: true,
-        type: {
-          street: { type: String, default: "" },
-          city: { type: String, default: "" },
-          state: { type: String, default: "" },
-          zip: { type: String, default: "" },
-          country: { type: String, default: "" },
-        }
+      },
+      city: {
+        type: String,
+        default: '',
+        required: true,
+      },
+      state: {
+        type: String,
+        default: '',
+        required: true,
+      },
+      zipcode: {
+        type: String,
+        default: '',
+        required: true,
       },
       rating: {
         type: Number,
