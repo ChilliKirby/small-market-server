@@ -18,6 +18,11 @@ interface MulterRequest extends Request {
 export const addBusiness = async (req: MulterRequest, res: any) => {
     console.log(req.body.phone)
     try{
+
+        const emailExists = await Business.exists({ email: req.body.email });
+        if(emailExists){
+            return res.status(400).json({ error: "Email already exists" });
+        } else{
     const business = new Business({
         name: req.body.name,
         email: req.body.email,
@@ -31,7 +36,9 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
 
     const saved = await business.save();
 
-    console.log("New user created:", saved);
+    
+
+}
 } catch(error){
     console.log(error);
 }
