@@ -51,8 +51,8 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
 
                 const uploadPromises = req.files?.map(file => {
                     console.log(file.originalname)
-                    console.log(req);
-                    const key = `${bucketName}/business/images/${file.originalname}`;
+                    
+                    const key = `${bucketName}/business/images/${saved.id}_${file.originalname}`;
 
                     const command = new PutObjectCommand({
                         Bucket: bucketName,
