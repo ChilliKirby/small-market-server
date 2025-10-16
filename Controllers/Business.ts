@@ -16,32 +16,64 @@ interface MulterRequest extends Request {
 
 
 export const addBusiness = async (req: MulterRequest, res: any) => {
-    console.log(req.body.phone)
-    try{
+   
+    try {
 
         const emailExists = await Business.exists({ email: req.body.email });
-        if(emailExists){
-            return res.status(400).json({ error: "Email already exists" });
-        } else{
-    const business = new Business({
-        name: req.body.name,
-        email: req.body.email,
-        phone: req.body.phone,
-        street: req.body.street,
-        city: req.body.city,
-        state: req.body.state,
-        zipcode: req.body.zipcode,
+        if (emailExists) {
+            return res.status(400).json({ error: "Business and/or Email already exists" });
+        } else {
+            const business = new Business({
+                name: req.body.name,
+                email: req.body.email,
+                phone: req.body.phone,
+                street: req.body.street,
+                city: req.body.city,
+                state: req.body.state,
+                zipcode: req.body.zipcode,
 
-    });
+            });
 
-    const saved = await business.save();
+            const saved = await business.save();
 
-    
+            console.log(saved);
 
-}
-} catch(error){
-    console.log(error);
-}
+            if (req.files) {
+
+                const bucketName = "small-market-bucket1";
+                const client = new S3Client({
+                    region: 'us-west-2',
+                    credentials: {
+                        accessKeyId: process.env.AWS_S3_ACCESS_KEY!,
+                        secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY!,
+                    }
+                });
+
+                const uploadPromises = req.files?.map(file => {
+                    console.log(file.originalname)
+                    console.log(req);
+                    const key = `${bucketName}/business/images/${file.originalname}`;
+
+                    const command = new PutObjectCommand({
+                        Bucket: bucketName,
+                        Key: key,
+                        Body: file.buffer,
+                        ContentType: file.mimetype,
+                    });
+
+                    return client.send(command);
+                });
+
+                const uploadedFiles = await Promise.all(uploadPromises);
+                res.status(200).json({
+                    message: "Files uploaded successfully",
+                });
+            }
+        }
+
+    } catch (error) {
+        console.log(error);
+    }
     // if (req.files) {
     //     try{
     //     const bucketName = "small-market-bucket1";
@@ -68,14 +100,15 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
     //         return client.send(command);
     //     });
 
-        // const uploadedFiles = await Promise.all(uploadPromises);
-        // res.status(200).json({
-        //     message: "Files uploaded successfully",
+    // const uploadedFiles = await Promise.all(uploadPromises);
+    // res.status(200).json({
+    //     message: "Files uploaded successfully",
     //    });
     //     console.log("hitting server");
     // } catch(error){
     //     console.log(error);
     // }
     //}
+
 }
 
