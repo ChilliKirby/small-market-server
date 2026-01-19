@@ -3,7 +3,7 @@ import express from 'express';
 import multer from 'multer';
 
 import verifyGoogleToken from '../../Controllers/GoogleTokenAuthentication';
-import {addBusiness} from '../../Controllers/Business';
+import {addBusiness} from '../../Controllers/AdminBusiness/adminAddBusiness';
 
 const router = express.Router();
 const storage = multer.memoryStorage();

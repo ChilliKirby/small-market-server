@@ -6,7 +6,7 @@ import {
     S3ServiceException,
 } from '@aws-sdk/client-s3';
 import mongoose from 'mongoose';
-import Business from '../Models/Business'
+import Business from '../../Models/Business'
 
 
 
