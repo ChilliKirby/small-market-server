@@ -15,7 +15,7 @@ router.post('/adminlogin', verifyGoogleToken, async (req, res) => {
     const user = await Admin.findOne({ email: email });
 
     if (!user) {
-        res.status(404).send("User not found");
+        return res.status(404).send("User not found");
     }
 
     const JWT_SECRET = process.env.SMALL_MARKET_JT as string;

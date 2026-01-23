@@ -1,7 +1,8 @@
 import Business from '../../Models/Business';
+import { Router, Request, Response } from 'express';
 
-const adminGetBusinesses = async() => {
-
+const adminGetBusinesses = async(req: Request, res: Response): Promise<void> => {
+    console.log("here")
     const limit = 3;///////////////////
     const page = 1;/////////////////
     const skip = 0;
@@ -17,4 +18,6 @@ const adminGetBusinesses = async() => {
     } catch(error){
 
     }
-}
+};
+
+export default adminGetBusinesses;
