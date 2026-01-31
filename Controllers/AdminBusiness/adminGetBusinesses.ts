@@ -7,7 +7,7 @@ const adminGetBusinesses = async (req: Request, res: Response): Promise<void> =>
     const page = Number(req.query.page || 1);
     const skip = (page - 1) * limit;
     try {
-        const [response, total] = await Promise.all([
+        const [businesses, total] = await Promise.all([
             Business
                 .find({ status: 'approved' })
                 .sort({ name: 1, _id: 1 })
@@ -16,9 +16,9 @@ const adminGetBusinesses = async (req: Request, res: Response): Promise<void> =>
                 .lean(),
             Business.countDocuments(),
         ])
-        
+
         res.json({
-            response,
+            businesses,
             page,
             total,
             hasMore: skip + adminGetBusinesses.length < total,
@@ -29,6 +29,7 @@ const adminGetBusinesses = async (req: Request, res: Response): Promise<void> =>
             businesses: [],
             page,
             total: 0,
+            hasMore: false
         })
     }
 };
