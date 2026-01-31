@@ -10,6 +10,7 @@ const adminGetBusinesses = async (req: Request, res: Response): Promise<void> =>
         const [businesses, total] = await Promise.all([
             Business
                 .find({ status: 'approved' })
+                .select("name imageMain status subscriptionPlan")
                 .sort({ name: 1, _id: 1 })
                 .skip(skip)
                 .limit(limit)
@@ -21,7 +22,7 @@ const adminGetBusinesses = async (req: Request, res: Response): Promise<void> =>
             businesses,
             page,
             total,
-            hasMore: skip + adminGetBusinesses.length < total,
+            hasMore: skip + businesses.length < total,
         });
     } catch (error) {
         console.log(error);
