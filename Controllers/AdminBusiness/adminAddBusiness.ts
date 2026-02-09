@@ -38,7 +38,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
 
         const saved = await business.save();
 
-        if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+        //if (req.files && Array.isArray(req.files) && req.files.length > 0) {
 
             const bucketName = "small-market-bucket1";
             const client = new S3Client({
@@ -49,27 +49,27 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
                 }
             });
 
-            const uploadPromises = req.files?.map(async (file: Express.Multer.File) => {
+        //     const uploadPromises = req.files?.map(async (file: Express.Multer.File) => {
 
-                const key = `business/images/${saved.id}_${file.originalname}`;
+        //         const key = `business/images/${saved.id}_${file.originalname}`;
 
-                const command = new PutObjectCommand({
-                    Bucket: bucketName,
-                    Key: key,
-                    Body: file.buffer,
-                    ContentType: file.mimetype,
-                });
+        //         const command = new PutObjectCommand({
+        //             Bucket: bucketName,
+        //             Key: key,
+        //             Body: file.buffer,
+        //             ContentType: file.mimetype,
+        //         });
 
-                return client.send(command);
-            });
+        //         return client.send(command);
+        //     });
 
-            const uploadedFiles = await Promise.all(uploadPromises);
-        }
+        //     const uploadedFiles = await Promise.all(uploadPromises);
+        // }
         
          res.status(200).json({
-                message: "Business created successfully",
+                //message: "Business created successfully",
                 id: saved._id.toString(),
-                name: saved.name
+                //name: saved.name
             });
 
     } catch (error) {

@@ -17,7 +17,7 @@ const adminGetBusinesses = async (req: Request, res: Response): Promise<void> =>
                 .lean(),
             Business.countDocuments(),
         ])
-
+        console.log(businesses)
         res.json({
             businesses,
             page,
