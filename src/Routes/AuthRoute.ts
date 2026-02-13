@@ -1,7 +1,7 @@
 import express from 'express';
 import jwt from 'jsonwebtoken';
 
-import verifyGoogleToken from '../../Controllers/GoogleTokenAuthentication';
+import verifyGoogleToken from '../../Middleware/GoogleTokenAuthentication';
 import Admin from '../../Models/Admin';
 
 const router = express.Router();

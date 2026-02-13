@@ -2,7 +2,7 @@ import { verify } from 'crypto';
 import express from 'express';
 import multer from 'multer';
 
-import verifyGoogleToken from '../../Controllers/GoogleTokenAuthentication';
+import verifyGoogleToken from '../../Middleware/GoogleTokenAuthentication';
 import {addBusiness} from '../../Controllers/AdminBusiness/adminAddBusiness';
 import adminGetBusinesses from '../../Controllers/AdminBusiness/adminGetBusinesses';
 

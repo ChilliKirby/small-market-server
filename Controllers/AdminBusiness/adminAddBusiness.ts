@@ -7,6 +7,7 @@ import {
 } from '@aws-sdk/client-s3';
 import mongoose from 'mongoose';
 import Business from '../../Models/Business'
+import { auth } from 'google-auth-library';
 
 
 
@@ -18,6 +19,20 @@ interface MulterRequest extends Request {
 export const addBusiness = async (req: MulterRequest, res: any) => {
 
     try {
+
+        const { name, email, phone, street, city, state, zipcode } = req.body;
+        
+        const authHeader = req.headers.authorization;
+        const token =  authHeader?.split(" ")[1];
+
+        if(!token){
+            return res.status(401).json({
+                success: false,
+                message: "No token provided."
+            })
+        }
+
+        
 
         const emailExists = await Business.exists({ email: req.body.email });
         if (emailExists) {
