@@ -22,4 +22,6 @@ const jwtAuthentication = (req: Request, res: Response, next: NextFunction) => {
     } catch (error) {
         return res.status(403).json({ message: "Invalid token."});
     }
-}
+};
+
+export default jwtAuthentication;

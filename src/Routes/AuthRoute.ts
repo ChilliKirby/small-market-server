@@ -9,10 +9,11 @@ const router = express.Router();
 router.post('/adminlogin', verifyGoogleToken, async (req, res) => {
 
     const name = (req as any).customData.name;
-    const email = (req as any).customData.email;
+    const email = (req as any).customData.email.trim();
 
     //res.send("req");
     const user = await Admin.findOne({ email: email });
+    console.log(user);
 
     if (!user) {
         return res.status(404).send("User not found");

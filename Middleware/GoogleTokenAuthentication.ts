@@ -6,7 +6,7 @@ const verifyGoogleToken = async (req: Request, res: Response, next: NextFunction
         const client = new OAuth2Client();
 
         const idToken = req.body?.idToken;
-
+        
         if (!idToken) {
             return res.status(400).json({ error: 'idToken is required in request body' });
         }
@@ -26,7 +26,7 @@ const verifyGoogleToken = async (req: Request, res: Response, next: NextFunction
             name: payload.name,
             email: payload.email,
         };
-
+        
         next();
     } catch (error) {
         console.log(error);
