@@ -12,22 +12,36 @@ type BusinessQuery = {
     id?: string;
 };
 
-const adminGetBusinesses = async (req: Request<{},{},{}, BusinessQuery>, res: Response) =>{
+/**
+ * Retrieves a single business by id.
+ * 
+ * Query Params (BusinessQuery):
+ * -id?: string
+ * 
+ * @param req - Express request object containing query id
+ * @param res - Express response object returning matching business.
+ * 
+ * @returns 200 - single business document
+ * @returns 404 - not found
+ */
+const adminGetBusiness = async (req: Request<{}, {}, {}, BusinessQuery>, res: Response) => {
 
-    try{
-    const { id } = req.query;
+    try {
+        const { id } = req.query;
 
-    const business = await Business.findById(id).lean();
+        const business = await Business.findById(id).lean();
 
-    if(!business){
-        return res.status(404).json({message: "Not found" });
-    }
+        if (!business) {
+            res.status(404).json({ message: "Not found" });
+            return;
+        }
+        return res.json({business});
 
-    res.json(business);
-
-    } catch(error){
-        console.log(error);
+    } catch (error) {
+        res.status(404).json({ message: "Not found" });
+        return;
+        //console.log(error);
     }
 };
 
-export default adminGetBusinesses;
+export default adminGetBusiness;
