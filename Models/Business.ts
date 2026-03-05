@@ -39,6 +39,10 @@ const BusinessSchema = new mongoose.Schema(
       type: String,
       default: '',
     },
+    website: {
+      type: String,
+      default: '',
+    },
     rating: {
       type: Number,
       min: 0,

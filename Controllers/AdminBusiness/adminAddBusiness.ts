@@ -50,6 +50,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
             state: req.body.state,
             zipcode: req.body.zipcode,
             info: req.body.info,
+            website: req.body.website,
         });
 
         const saved = await business.save();
