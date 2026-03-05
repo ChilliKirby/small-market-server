@@ -35,6 +35,10 @@ const BusinessSchema = new mongoose.Schema(
       default: '',
       required: true,
     },
+    info: {
+      type: String,
+      default: '',
+    },
     rating: {
       type: Number,
       min: 0,
@@ -86,6 +90,8 @@ const BusinessSchema = new mongoose.Schema(
     }
   },
 
+
+  
   { timestamps: true }
 );
 
