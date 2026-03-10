@@ -11,7 +11,7 @@ import { Router, Request, Response } from 'express';
  * @returns 
  */
 const adminGetBusinesses = async (req: Request, res: Response): Promise<void> => {
-
+console.log("in getbusinessesr")
     const limit = 15;
     const page = Number(req.query.page || 1);
     const skip = (page - 1) * limit;

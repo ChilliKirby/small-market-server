@@ -19,7 +19,6 @@ interface MulterRequest extends Request {
 export const addBusiness = async (req: MulterRequest, res: any) => {
 
     try {
-
         const { name, email, phone, street, city, state, zipcode } = req.body;
         
         const authHeader = req.headers.authorization;
@@ -31,8 +30,6 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
                 message: "No token provided."
             })
         }
-
-        
 
         const emailExists = await Business.exists({ email: req.body.email });
         if (emailExists) {
@@ -55,7 +52,15 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
 
         const saved = await business.save();
 
-        //if (req.files && Array.isArray(req.files) && req.files.length > 0) {
+        if(saved){
+            saved.imageMain = `${saved.id}_main_image`;
+            saved.imageFirst = `${saved.id}_first_image`;
+            saved.imageSecond = `${saved.id}_second_image`;
+            saved.imageThird = `${saved.id}_third_image`;
+            await saved.save();
+        }
+
+        if (saved && req.file) {
 
             const bucketName = "small-market-bucket1";
             const client = new S3Client({
@@ -66,27 +71,21 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
                 }
             });
 
-        //     const uploadPromises = req.files?.map(async (file: Express.Multer.File) => {
+            const image = req.file;
+            const key = `business/images/${saved.id}_main_image`;
+            const command = new PutObjectCommand({
+                Bucket: bucketName,
+                Key: key,
+                Body: image?.buffer,
+                ContentType: image?.mimetype,
+            });
 
-        //         const key = `business/images/${saved.id}_${file.originalname}`;
-
-        //         const command = new PutObjectCommand({
-        //             Bucket: bucketName,
-        //             Key: key,
-        //             Body: file.buffer,
-        //             ContentType: file.mimetype,
-        //         });
-
-        //         return client.send(command);
-        //     });
-
-        //     const uploadedFiles = await Promise.all(uploadPromises);
-        // }
+            const imageResponse = await client.send(command);   
+        }
         
          res.status(200).json({
                 //message: "Business created successfully",
                 id: saved._id.toString(),
-                //name: saved.name
             });
 
     } catch (error) {

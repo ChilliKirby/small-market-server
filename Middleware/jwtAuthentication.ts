@@ -20,6 +20,7 @@ const jwtAuthentication = (req: Request, res: Response, next: NextFunction) => {
          const user = jwt.verify(token, process.env.SMALL_MARKET_JT!);
          next();
     } catch (error) {
+        console.log("invalid token")
         return res.status(403).json({ message: "Invalid token."});
     }
 };
