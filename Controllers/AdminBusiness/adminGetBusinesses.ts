@@ -11,12 +11,16 @@ import { Router, Request, Response } from 'express';
  * @returns 
  */
 const adminGetBusinesses = async (req: Request, res: Response): Promise<void> => {
-console.log("in getbusinessesr")
+
     const limit = 15;
     const page = Number(req.query.page || 1);
     const skip = (page - 1) * limit;
+    //const baseUrl = `https://${process.env.AWS   .s3.${process.amazonaws.com${process.env.AWS_S3_FOLDER}`;
+    const baseUrl = process.env.AWS_IMAGE_URL;
+                       https://small_market_bucket1.s3.us-west-2.amazonaws.com/business/images/
+
     try {
-        const [businesses, total] = await Promise.all([
+        const [businesses, totalBusinesses] = await Promise.all([
             Business
                 .find({ status: 'approved' })
                 .select("name imageMain status subscriptionPlan")
@@ -26,12 +30,20 @@ console.log("in getbusinessesr")
                 .lean(),
             Business.countDocuments(),
         ])
-        //console.log(businesses)
+
+        //Prepend aws s3 base url to each document
+        const businessesWithImages = businesses.map((business) => ({
+            ...business,
+            imageMain: business.imageMain
+            ? baseUrl + business.imageMain
+            : ""
+        }))
+
         res.json({
-            businesses,
+            businesses: businessesWithImages,
             page,
-            total,
-            hasMore: skip + businesses.length < total,
+            totalBusinesses,
+            totalPages: Math.ceil(totalBusinesses / limit),
         });
         return;
     } catch (error) {
@@ -40,7 +52,6 @@ console.log("in getbusinessesr")
             businesses: [],
             page,
             total: 0,
-            hasMore: false
         })
     }
 };

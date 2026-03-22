@@ -26,16 +26,37 @@ type BusinessQuery = {
  */
 const adminGetBusiness = async (req: Request<{}, {}, {}, BusinessQuery>, res: Response) => {
 
-    try {
+
         const { id } = req.query;
+        const baseUrl = process.env.AWS_IMAGE_URL;
+        try{
 
         const business = await Business.findById(id).lean();
 
-        if (!business) {
+         if (!business) {
             res.status(404).json({ message: "Not found" });
             return;
         }
-        return res.json({business});
+
+        //modify business object to add base url to images found in object
+        const businessWithImages = {
+            ...business,
+            imageMain: business.imageMain !== "" ?
+             baseUrl + business.imageMain
+             : "",
+            imageFirst: business.imageFirst !== "" ? 
+            baseUrl + business.imageFirst
+            : "",
+            imageSecond: business.imageSecond !== "" ? 
+            baseUrl + business.imageSecond
+            : "",
+            imageThird: business.imageThird !== "" ? 
+            baseUrl + business.imageThird
+            : "",
+        }
+       console.log("businessWithImages")
+       console.log(businessWithImages)
+        return res.json({businessWithImages});
 
     } catch (error) {
         res.status(404).json({ message: "Not found" });

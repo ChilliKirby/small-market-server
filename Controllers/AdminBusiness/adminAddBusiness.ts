@@ -21,6 +21,12 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
     try {
         const { name, email, phone, street, city, state, zipcode } = req.body;
         
+        //aws bucket info
+        const bucketName = process.env.AWS_S3_BUCKET_NAME;
+        const awsRegion = process.env.AWS_REGION;
+        const baseUrl = process.env.AWS_IMAGE_URL;
+
+        //client id
         const authHeader = req.headers.authorization;
         const token =  authHeader?.split(" ")[1];
 
@@ -54,17 +60,14 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
 
         if(saved){
             saved.imageMain = `${saved.id}_main_image`;
-            saved.imageFirst = `${saved.id}_first_image`;
-            saved.imageSecond = `${saved.id}_second_image`;
-            saved.imageThird = `${saved.id}_third_image`;
             await saved.save();
         }
 
         if (saved && req.file) {
 
-            const bucketName = "small-market-bucket1";
+            //const bucketName = bucketName;
             const client = new S3Client({
-                region: 'us-west-2',
+                region: awsRegion,
                 credentials: {
                     accessKeyId: process.env.AWS_S3_ACCESS_KEY!,
                     secretAccessKey: process.env.AWS_S3_SECRET_ACCESS_KEY!,
