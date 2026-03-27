@@ -50,19 +50,19 @@ const BusinessSchema = new mongoose.Schema(
     },
     imageMain: {
       type: String,
-      default: '',
+      default: null,
     },
     imageFirst: {
       type: String,
-      default: '',
+      default: null,
     },
     imageSecond: {
       type: String,
-      default: '',
+      default: null,
     },
     imageThird: {
       type: String,
-      default: '',
+      default: null,
     },
     subscriptionPlan: {
       type: String,

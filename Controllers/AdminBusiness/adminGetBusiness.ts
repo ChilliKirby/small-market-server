@@ -41,21 +41,19 @@ const adminGetBusiness = async (req: Request<{}, {}, {}, BusinessQuery>, res: Re
         //modify business object to add base url to images found in object
         const businessWithImages = {
             ...business,
-            imageMain: business.imageMain !== "" ?
+            imageMain: business.imageMain !== null ?
              baseUrl + business.imageMain
-             : "",
-            imageFirst: business.imageFirst !== "" ? 
+             : null,
+            imageFirst: business.imageFirst !== null ? 
             baseUrl + business.imageFirst
-            : "",
-            imageSecond: business.imageSecond !== "" ? 
+            : null,
+            imageSecond: business.imageSecond !== null ? 
             baseUrl + business.imageSecond
-            : "",
-            imageThird: business.imageThird !== "" ? 
+            : null,
+            imageThird: business.imageThird !== null? 
             baseUrl + business.imageThird
-            : "",
+            : null,
         }
-       console.log("businessWithImages")
-       console.log(businessWithImages)
         return res.json({businessWithImages});
 
     } catch (error) {

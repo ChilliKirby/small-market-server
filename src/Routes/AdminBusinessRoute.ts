@@ -15,7 +15,7 @@ const upload = multer({ storage: storage})
 
 
 router.post('/addbusiness', upload.single("image"), addBusiness);
-router.put('/adminupdatebusiness', jwtAuthentication, adminUpdateBusiness);
+router.put('/adminupdatebusiness/:id', jwtAuthentication, adminUpdateBusiness);
 router.get('/admingetbusinesses',jwtAuthentication, adminGetBusinesses);
 router.get('/admingetbusiness', jwtAuthentication, adminGetBusiness);
 export default router;

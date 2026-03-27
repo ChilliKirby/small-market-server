@@ -37,6 +37,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
             })
         }
 
+        //business already has an account
         const emailExists = await Business.exists({ email: req.body.email });
         if (emailExists) {
             return res.status(400).json({ 
@@ -44,6 +45,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
                 message: "Business and/or Email already exists" });
         }
 
+        //Create business document for mongodb
         const business = new Business({
             name: req.body.name,
             email: req.body.email,
@@ -56,13 +58,10 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
             website: req.body.website,
         });
 
+        //save document 
         const saved = await business.save();
 
-        if(saved){
-            saved.imageMain = `${saved.id}_main_image`;
-            await saved.save();
-        }
-
+        //If image was given, save to AWS S3 and save key in mongodb
         if (saved && req.file) {
 
             //const bucketName = bucketName;
@@ -82,6 +81,10 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
                 Body: image?.buffer,
                 ContentType: image?.mimetype,
             });
+
+            //save AWS S3 key in mongodb
+            saved.imageMain = `${saved.id}_main_image`;
+            await saved.save();
 
             const imageResponse = await client.send(command);   
         }

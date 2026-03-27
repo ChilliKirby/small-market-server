@@ -19,10 +19,10 @@ type UpdateBusinessData = {
  * @returns json: MongoDB business document
  */
 const adminUpdateBusiness = async(req: Request, res: Response) => {
-   
+   console.log(req)
     try{
         const { id } = req.params;
- console.log(id)
+        
         const business = await Business.findByIdAndUpdate(
             id,
             req.body,
