@@ -74,7 +74,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
             });
 
             const image = req.file;
-            const key = `business/images/${saved.id}_main_image`;
+            const key = `business/images/${saved.id}_main_image.jpg`;
             const command = new PutObjectCommand({
                 Bucket: bucketName,
                 Key: key,
