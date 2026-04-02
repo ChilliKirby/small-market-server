@@ -90,7 +90,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
         }
         
          res.status(200).json({
-                //message: "Business created successfully",
+                //message: "Business created successfully",,
                 id: saved._id.toString(),
             });
 
