@@ -12,6 +12,10 @@ interface MulterRequest extends Request {
  * Updates one of the images in the business profile. The image position parameter
  * will determine the position of the image, e.g., main image or sub image.
  * 
+ * The businessDocumentField will be used to determine whether image will be set
+ * as main, first, second, or third image in the mongo db document. The file name field will be used to 
+ * determine file name.
+ * 
  * @param req - Express req containing the id, image, and image position of the business.
  * @param res 
  */
@@ -28,13 +32,13 @@ const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
 
     //determine the field and file name to use depending on 
     //client's request
-    if (imagePosition == 0) {
+    if (imagePosition == "0") {
         businessDocumentField = "imageMain";
         fileName = "main_image_.jpg";
-    } else if (imagePosition == 1) {
+    } else if (imagePosition == "1") {
         businessDocumentField = "imageFirst";
         fileName = "first_image_.jpg";
-    } else if (imagePosition == 2) {
+    } else if (imagePosition == "2") {
         businessDocumentField = "imageSecond";
         fileName = "second_image_.jpg";
     } else {
