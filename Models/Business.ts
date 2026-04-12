@@ -91,6 +91,10 @@ const BusinessSchema = new mongoose.Schema(
       type: String,
       enum: ['approved', 'suspended'],
       default: 'approved'
+    },
+    imageVersion: {
+      type: Number,
+      default: 0,
     }
   },
 

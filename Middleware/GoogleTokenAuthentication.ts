@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import { OAuth2Client } from "google-auth-library";
 
 const verifyGoogleToken = async (req: Request, res: Response, next: NextFunction) => {
+    console.log("token here")
     try {
         const client = new OAuth2Client();
 

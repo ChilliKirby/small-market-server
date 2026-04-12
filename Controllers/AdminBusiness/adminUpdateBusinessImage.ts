@@ -20,7 +20,7 @@ interface MulterRequest extends Request {
  * @param res 
  */
 const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
-
+console.log("in image update")
     const { id } = req.params;
     const { imagePosition } = req.body;
 
@@ -34,16 +34,16 @@ const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
     //client's request
     if (imagePosition == "0") {
         businessDocumentField = "imageMain";
-        fileName = "main_image_.jpg";
+        fileName = "main_image.jpg";
     } else if (imagePosition == "1") {
         businessDocumentField = "imageFirst";
-        fileName = "first_image_.jpg";
+        fileName = "first_image.jpg";
     } else if (imagePosition == "2") {
         businessDocumentField = "imageSecond";
-        fileName = "second_image_.jpg";
+        fileName = "second_image.jpg";
     } else {
         businessDocumentField = "imageThird";
-        fileName = "third_image_.jpg";
+        fileName = "third_image.jpg";
     };
 
     //aws bucket info
@@ -51,16 +51,23 @@ const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
     const awsRegion = process.env.AWS_REGION;
     const baseUrl = process.env.AWS_IMAGE_URL;
 
+    //image key for mongodb 
+    const key = `${id}_${fileName}`
+
     try {
         //fetch mongo db business document and update the image field only;
         const business = await Business.findByIdAndUpdate(
             id,
-            { $set: { businessDocumentField: baseUrl + fileName } }
+            { $set: { [businessDocumentField]: key },
+              $inc: { imageVersion: 1 },
+            }
         );
 
         if(!business){
             return res.sendStatus(404)
         }
+
+        business.save();
 
         if(req.file){
             const client = new S3Client({
@@ -73,12 +80,12 @@ const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
 
             //aws s3 command setup
             const image = req.file;
-            const key = `business/images/${id}_${fileName}`
+            const awsKey = `business/images/${id}_${fileName}`
 
             //make aws s3 request
             const command = new PutObjectCommand({
                 Bucket: bucketName,
-                Key: key,
+                Key: awsKey,
                 Body: image.buffer,
                 ContentType: image.mimetype,
             })
@@ -88,6 +95,7 @@ const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
 
         return res.sendStatus(200);
     } catch (error) {
+        console.log("pppp")
         return res.sendStatus(500);
     }
 }

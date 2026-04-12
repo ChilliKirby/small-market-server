@@ -19,6 +19,6 @@ router.post('/addbusiness', upload.single("image"), addBusiness);
 router.put('/adminupdatebusiness/:id', jwtAuthentication, adminUpdateBusiness);
 router.get('/admingetbusinesses',jwtAuthentication, adminGetBusinesses);
 router.get('/admingetbusiness', jwtAuthentication, adminGetBusiness);
-router.get('/adminupdatebusinessimage/:id', upload.single("image"), adminUpdateBusinessImage);
+router.put('/adminupdatebusinessimage/:id', jwtAuthentication, upload.single("image"), adminUpdateBusinessImage);
 
 export default router;

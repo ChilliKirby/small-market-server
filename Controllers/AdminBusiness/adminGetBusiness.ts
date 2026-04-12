@@ -42,16 +42,16 @@ const adminGetBusiness = async (req: Request<{}, {}, {}, BusinessQuery>, res: Re
         const businessWithImages = {
             ...business,
             imageMain: business.imageMain !== null ?
-             baseUrl + business.imageMain
+             `${baseUrl}${business.imageMain}?v=${business.imageVersion}`
              : null,
             imageFirst: business.imageFirst !== null ? 
-            baseUrl + business.imageFirst
+            `${baseUrl}${business.imageFirst}?v=${business.imageVersion}`
             : null,
             imageSecond: business.imageSecond !== null ? 
-            baseUrl + business.imageSecond
+            `${baseUrl}${business.imageSecond}?v=${business.imageVersion}`
             : null,
             imageThird: business.imageThird !== null? 
-            baseUrl + business.imageThird
+            `${baseUrl}${business.imageThird}?v=${business.imageVersion}`
             : null,
         }
         return res.json({businessWithImages});
