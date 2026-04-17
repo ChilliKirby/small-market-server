@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from 'dotenv';
+import helmet from "helmet";
 
 import authRoutes from './Routes/AuthRoute';
 import adminBusinessRoutes from './Routes/AdminBusinessRoute';
@@ -10,7 +11,9 @@ import adminBusinessRoutes from './Routes/AdminBusinessRoute';
 dotenv.config();
 const app = express();
 const PORT = 3001;
+app.use(helmet());
 app.use(express.json());
+
 
 /*Routes*/
 app.use('/auth', authRoutes);
