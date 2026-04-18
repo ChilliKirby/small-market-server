@@ -36,7 +36,7 @@ const upload = multer({
 
 
 router.post('/addbusiness', jwtAuthentication, upload.single("image"), validateBusiness, handleValidation, sanitizeMiddleware, addBusiness);
-router.put('/adminupdatebusiness/:id', jwtAuthentication, validateBusiness, adminUpdateBusiness);
+router.put('/adminupdatebusiness/:id', jwtAuthentication, validateBusiness, sanitizeMiddleware, adminUpdateBusiness);
 router.get('/admingetbusinesses', jwtAuthentication, adminGetBusinesses);
 router.get('/admingetbusiness', jwtAuthentication, adminGetBusiness);
 router.put('/adminupdatebusinessimage/:id', jwtAuthentication, upload.single("image"), adminUpdateBusinessImage);
