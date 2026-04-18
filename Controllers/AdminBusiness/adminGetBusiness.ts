@@ -3,12 +3,6 @@ import mongoose from "mongoose";
 import Business from "../../Models/Business";
 
 type BusinessQuery = {
-    // name?: string;
-    // email?: string;
-    // phone?: string;
-    // street?: string;
-    // city?: string;
-    // state
     id?: string;
 };
 
@@ -24,10 +18,10 @@ type BusinessQuery = {
  * @returns 200 - single business document
  * @returns 404 - not found
  */
-const adminGetBusiness = async (req: Request<{}, {}, {}, BusinessQuery>, res: Response) => {
+const adminGetBusiness = async (req: Request<BusinessQuery, {}, {}, {}>, res: Response) => {
 
 
-        const { id } = req.query;
+        const  id  = req.params.id;
         const baseUrl = process.env.AWS_IMAGE_URL;
         try{
 
