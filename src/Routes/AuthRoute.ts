@@ -13,7 +13,7 @@ router.post('/adminlogin', verifyGoogleToken, async (req, res) => {
 
     //res.send("req");
     const user = await Admin.findOne({ email: email });
-    console.log(user);
+    
 
     if (!user) {
         return res.status(404).send("User not found");
