@@ -20,7 +20,7 @@ interface MulterRequest extends Request {
  * @param res 
  */
 const adminUpdateBusinessImage = async (req: MulterRequest, res: any) => {
-console.log("in image update")
+
     const { id } = req.params;
     const { imagePosition } = req.body;
 
@@ -95,7 +95,7 @@ console.log("in image update")
 
         return res.sendStatus(200);
     } catch (error) {
-        console.log("pppp")
+        
         return res.sendStatus(500);
     }
 }

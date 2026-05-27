@@ -19,7 +19,7 @@ type UpdateBusinessData = {
  * @returns json: MongoDB business document
  */
 const adminUpdateBusiness = async(req: Request, res: Response) => {
-   console.log(req)
+   
     try{
         const { id } = req.params;
         
@@ -32,8 +32,7 @@ const adminUpdateBusiness = async(req: Request, res: Response) => {
         if(!business){
             return res.status(404).json({message: "Business not found."});
         }
-        console.log("success")
-        console.log(business);
+        
         return res.status(200).json(business);
 
     } catch(error){
