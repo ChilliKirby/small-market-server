@@ -6,6 +6,7 @@ import rateLimit from 'express-rate-limit';
 
 import authRoutes from './Routes/AuthRoute';
 import adminBusinessRoutes from './Routes/AdminBusinessRoute';
+import usersBusinessRoutes from './Routes/UsersBusinessRoute';
 
 
 /*Configurations*/
@@ -34,6 +35,7 @@ const authLimiter = rateLimit({
 /*Routes*/
 app.use('/auth', authLimiter, authRoutes);
 app.use('/admin/business', globalLimiter, adminBusinessRoutes);
+app.use('/users/business', globalLimiter, usersBusinessRoutes);
 
 /* Mongoose Setup */
 mongoose.connect(process.env.MONGO_URL!)

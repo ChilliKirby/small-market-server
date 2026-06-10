@@ -5,7 +5,7 @@ import { Request, Response } from 'express';
  * GET /categories
  * Fetches all business categories from the database.
  */
-const clientGetCategories = async (req: Request, res: Response) => {
+const usersGetCategories = async (req: Request, res: Response) => {
 
     try {
         const categories = await BusinessCategories.find();
@@ -21,4 +21,4 @@ const clientGetCategories = async (req: Request, res: Response) => {
     }
 }
 
-export default clientGetCategories;
+export default usersGetCategories;
