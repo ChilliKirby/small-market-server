@@ -8,6 +8,12 @@ const BusinessCategoriesSchema = new mongoose.Schema({
     slug: {
         type: String,
         required: true
+    },
+    color: {
+        type: String,
+    }, 
+    icon: {
+        type: String
     }
 })
 
