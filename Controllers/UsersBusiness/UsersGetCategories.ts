@@ -12,8 +12,7 @@ const usersGetCategories = async (req: Request, res: Response) => {
 
     try {
         const categories = await BusinessCategories.find();
-                      console.log(BusinessCategories.collection.name);           
-        console.log(categories);
+                      
         return res.status(200).json(categories);
 
 

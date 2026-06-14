@@ -64,6 +64,10 @@ const BusinessSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
+      categoryIds: {
+        type: [String],
+        default: null,
+    },
     subscriptionPlan: {
       type: String,
       enum: ['free', 'pro'],
