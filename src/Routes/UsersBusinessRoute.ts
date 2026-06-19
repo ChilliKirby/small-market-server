@@ -7,6 +7,6 @@ import usersGetBusinessesWithCategories from '../../Controllers/UsersBusiness/Us
 const router = express.Router();
 
 router.get('/categories', usersGetCategories);
-router.get('/businessesWithCategories', usersGetBusinessesWithCategories);
+router.get('/businesseswithcategories', usersGetBusinessesWithCategories);
 
 export default router;
