@@ -1,8 +1,8 @@
-import {Response} from 'express'
+import {Response, Request} from 'express'
 
 import BusinessCategories from '../../Models/BusinessCategories'
 
-const adminGetCategories = async(res: Response) => {
+const adminGetCategories = async(req: Request, res: Response) => {
 
     try{
         const response = await BusinessCategories.find();
