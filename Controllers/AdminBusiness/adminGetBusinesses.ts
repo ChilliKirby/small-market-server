@@ -3,7 +3,9 @@ import { Router, Request, Response } from 'express';
 
 
 /**
- * Retrieves a list of business for browsing
+ * Retrieves a list of businesses for browsing. AWS S3 base url is prepended
+ * to each business image url.
+ * 
  * @param req.query.page 
  * @param res - Express response object returning a page of businesses.
  * 
