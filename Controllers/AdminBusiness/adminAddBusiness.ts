@@ -10,18 +10,15 @@ import Business from '../../Models/Business'
 import { auth } from 'google-auth-library';
 
 
-
 interface MulterRequest extends Request {
     files?: Express.Multer.File[];
 }
 
-
 export const addBusiness = async (req: MulterRequest, res: any) => {
-console.log("inhere")
-console.log(req.body.categories)
+
     try {
-        const { name, email, phone, street, city, state, zipcode, info, website } = req.body;
-        
+        const { name, email, phone, street, city, state, zipcode, info, website, categories } = req.body;
+       
         //aws bucket info
         const bucketName = process.env.AWS_S3_BUCKET_NAME;
         const awsRegion = process.env.AWS_REGION;
@@ -45,16 +42,6 @@ console.log(req.body.categories)
                 success: false,
                 message: "Business and/or Email already exists" });
         }
-
-        //Set up categories. Will check if categories is array or string. 
-        //If string, change to array. [] if empty.
-        const categories = Array.isArray(req.body.categories)
-        ? req.body.categories
-        : req.body.categories 
-            ? [req.body.categories]
-            : [];
-
-        console.log(categories);
             
         //Create business document for mongodb
         const business = new Business({
@@ -67,9 +54,10 @@ console.log(req.body.categories)
             zipcode: zipcode,
             info: info,
             website: website,
-            catagoryIds: categories,
+            categoryIds: categories,
         });
-
+ console.log("dende")
+        console.log(business)
        
         //save document 
         const saved = await business.save();

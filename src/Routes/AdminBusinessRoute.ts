@@ -14,6 +14,7 @@ import { validateBusiness } from '../../Middleware/validateBusiness';
 import { handleValidation } from '../../Middleware/handleValidation';
 import {validateBusinessId} from '../../Middleware/validateBusinessId';
 import adminGetCategories from '../../Controllers/AdminBusiness/adminGetCategories';
+import normalizeCategories from '../../Middleware/NormalizeCategories'
 
 const router = express.Router();
 const storage = multer.memoryStorage();
@@ -37,7 +38,7 @@ const upload = multer({
 })
 
 
-router.post('/addbusiness', jwtAuthentication, upload.single("image"), validateBusiness, handleValidation, sanitizeMiddleware, addBusiness);
+router.post('/addbusiness', jwtAuthentication, upload.single("image"), normalizeCategories, validateBusiness, handleValidation, sanitizeMiddleware, addBusiness);
 router.put('/adminupdatebusiness/:id', jwtAuthentication, validateBusiness, handleValidation, sanitizeMiddleware, adminUpdateBusiness);
 router.get('/admingetbusinesscategories', jwtAuthentication, adminGetCategories);
 router.get('/admingetbusinesses', jwtAuthentication, adminGetBusinesses);
