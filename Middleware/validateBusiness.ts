@@ -42,5 +42,14 @@ export const validateBusiness = [
     body('info')
         .optional()
         .trim()
-        .isLength({max: 500})
+        .isLength({max: 500}),
+
+    body('categories')
+        .isArray({min: 1})
+        .withMessage("Each category must be a non-empty string"),
+
+    body('categories.*')
+        .isString()
+        .notEmpty()
+        .withMessage("Each category must be a non-empty string"),
 ];

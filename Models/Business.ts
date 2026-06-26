@@ -64,9 +64,9 @@ const BusinessSchema = new mongoose.Schema(
       type: String,
       default: null,
     },
-      categoryIds: {
-        type: [String],
-        default: null,
+    categoryIds: {
+      type: [String],
+      default: ['general'],
     },
     subscriptionPlan: {
       type: String,
@@ -91,7 +91,7 @@ const BusinessSchema = new mongoose.Schema(
     paymentId: {
       type: String, //External ID from Stripe/Paypal/etc
     },
-    status:{
+    status: {
       type: String,
       enum: ['approved', 'suspended'],
       default: 'approved'
@@ -103,7 +103,7 @@ const BusinessSchema = new mongoose.Schema(
   },
 
 
-  
+
   { timestamps: true }
 );
 

@@ -17,9 +17,10 @@ interface MulterRequest extends Request {
 
 
 export const addBusiness = async (req: MulterRequest, res: any) => {
-
+console.log("inhere")
+console.log(req.body.categories)
     try {
-        const { name, email, phone, street, city, state, zipcode } = req.body;
+        const { name, email, phone, street, city, state, zipcode, info, website } = req.body;
         
         //aws bucket info
         const bucketName = process.env.AWS_S3_BUCKET_NAME;
@@ -45,19 +46,31 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
                 message: "Business and/or Email already exists" });
         }
 
+        //Set up categories. Will check if categories is array or string. 
+        //If string, change to array. [] if empty.
+        const categories = Array.isArray(req.body.categories)
+        ? req.body.categories
+        : req.body.categories 
+            ? [req.body.categories]
+            : [];
+
+        console.log(categories);
+            
         //Create business document for mongodb
         const business = new Business({
-            name: req.body.name,
-            email: req.body.email,
-            phone: req.body.phone,
-            street: req.body.street,
-            city: req.body.city,
-            state: req.body.state,
-            zipcode: req.body.zipcode,
-            info: req.body.info,
-            website: req.body.website,
+            name: name,
+            email: email,
+            phone: phone,
+            street: street,
+            city: city,
+            state: state,
+            zipcode: zipcode,
+            info: info,
+            website: website,
+            catagoryIds: categories,
         });
 
+       
         //save document 
         const saved = await business.save();
 
