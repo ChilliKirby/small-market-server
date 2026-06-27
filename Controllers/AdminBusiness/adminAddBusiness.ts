@@ -56,8 +56,8 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
             website: website,
             categoryIds: categories,
         });
- console.log("dende")
-        console.log(business)
+
+        
        
         //save document 
         const saved = await business.save();
@@ -84,7 +84,7 @@ export const addBusiness = async (req: MulterRequest, res: any) => {
             });
 
             //save AWS S3 key in mongodb
-            saved.imageMain = `${saved.id}_main_image`;
+            saved.imageMain = `${saved.id}_main_image.jpg`;
             await saved.save();
 
             const imageResponse = await client.send(command);   

@@ -14,8 +14,7 @@ import { Request, Response, NextFunction } from 'express';
 const normalizeCategories = (req: Request, res: Response, next: NextFunction) => {
 
     const c = req.body.categories;
-    console.log("goku")
-    console.log(c)
+    
     req.body.categories = Array.isArray(c)
         ? c
         : c
